@@ -1,11 +1,14 @@
 const functions = require('firebase-functions');
 
-exports.helloWorld = functions.https.onRequest((req, res) => {
- res.send('Hello from Firebase!');
+const express = require('express');
+const app = express();
+
+app.get('/helloWorld', (req, res) => {
+  res.send('Hello from Firebase!');
 });
 
-exports.yamanosusume = functions.https.onRequest((req, res) => {
-  const content = `<!DOCTYPE html>
+app.get('/yamanosusume', (req, res) => {
+  res.send(`<!DOCTYPE html>
 <html>
   <head>
     <title>yamanosusume</title>
@@ -13,7 +16,7 @@ exports.yamanosusume = functions.https.onRequest((req, res) => {
   <body>
     <img src="https://i.ytimg.com/vi/bu1-Gajd7Sw/maxresdefault.jpg">
   </body>
-</html>`;
-
-  res.status(200).send(content);
+</html>`);
 });
+
+exports.api = functions.https.onRequest(app);
